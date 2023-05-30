@@ -1,61 +1,50 @@
 ﻿// Задача 56: Задайте прямоугольный двумерный массив. Напишите программу, которая будет находить строку с наименьшей суммой элементов.
-Console.Write("Введите размерность m массива: ");
-int m = Convert.ToInt32(Console.ReadLine());
-Console.Write("Введите размерность n массива: ");
-int n = Convert.ToInt32(Console.ReadLine());
-int[,] randomArray = new int[m,n];
+int[,] CreateTwoDimensionArray(int firstLength, int secondLenght)
+{
+    int[,] array = new int[firstLength, secondLenght];
 
-void mas(int m, int n)
-{
-int i,j;
-Random rand = new Random();
-for (i = 0; i < m; i++)
-{
-for (j = 0; j < n; j++)
-{
-randomArray[i,j] = rand.Next(1,9);
-}
-}
+    for (int i = 0; i < array.GetLength(0); i++)
+        for (int j = 0; j < array.GetLength(1); j++)
+            array[i, j] = new Random().Next(0, 10);
+
+    return array;
 }
 
-void printm(int[,] array)
+void PrintArray(int[,] array)
 {
-int i,j;
-for (i = 0; i < array.GetLength(0); i++)
-{
-for (j = 0; j < array.GetLength(1); j++)
-{
-Console.Write($"{array[i,j]} ");
-}
-Console.WriteLine();
-}
+    for (int i = 0; i < array.GetLength(0); i++)
+    {
+        for (int j = 0; j < array.GetLength(1); j++)
+            Console.Write($"{array[i, j]} ");
+        Console.WriteLine();
+    }
 }
 
-mas(m,n);
-Console.WriteLine("\nИсходный массив: ");
-printm(randomArray);
+int[,] array = CreateTwoDimensionArray(5, 4);
+PrintArray(array);
+Console.WriteLine("");
 
-// Функция, считающая сумму элементов в строке
-int SumLine(int[,] array, int i)
+int[,] randomArray = CreateTwoDimensionArray(5, 4);
+int SumLine(int[,] randomArray, int i)
 {
-int sum = array[i,0];
-for (int j = 1; j < array.GetLength(1); j++)
-{
-sum += array[i,j];
-}
-return sum;
+    int sum = array[i, 0];
+    for (int j = 1; j < array.GetLength(1); j++)
+    {
+        sum += array[i, j];
+    }
+    return sum;
 }
 
 int minSum = 1;
 int sum = SumLine(randomArray, 0);
 for (int i = 1; i < randomArray.GetLength(0); i++)
-{
-if (sum > SumLine(randomArray, i))
-{
-sum = SumLine(randomArray, i);
-minSum = i+1;
+    {
+        if (sum > SumLine(randomArray, i))
+        {
+            sum = SumLine(randomArray, i);
+            minSum = i + 1;
+        }
 }
-}
+Console.ForegroundColor = ConsoleColor.Red;
 Console.WriteLine($"\nСтрока c наименьшей суммой элементов: {minSum}");
-
- 
+Console.ForegroundColor = ConsoleColor.White;
